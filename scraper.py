@@ -22,10 +22,13 @@ def createMarkdown(date, filename):
     with open(filename, 'w') as f:
         f.write("## " + date + "\n")
 
+def checkPathExist(path):
+    if not os.path.exists(path):
+        os.makedirs(path)
 
 def scrape(language, filename):
     HEADERS = {
-        'User-Agent'		: 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.7; rv:11.0) Gecko/20100101 Firefox/11.0',
+        'User-Agent'	: 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.7; rv:11.0) Gecko/20100101 Firefox/11.0',
         'Accept'			: 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
         'Accept-Encoding'	: 'gzip,deflate,sdch',
         'Accept-Language'	: 'zh-CN,zh;q=0.8'
@@ -34,7 +37,7 @@ def scrape(language, filename):
     url = 'https://github.com/trending/{language}'.format(language=language)
     r = requests.get(url, headers=HEADERS)
     assert r.status_code == 200
-    
+
     d = pq(r.content)
     items = d('div.Box article.Box-row')
 
@@ -56,8 +59,10 @@ def scrape(language, filename):
 
 def job():
     strdate = datetime.datetime.now().strftime('%Y-%m-%d')
-    filename = '{date}.md'.format(date=strdate)
+    stryear = datetime.datetime.now().strftime('%Y')
+    filename = stryear +'/{date}.md'.format(date=strdate)
 
+    checkPathExist(stryear)
     # create markdown file
     createMarkdown(strdate, filename)
 
@@ -66,10 +71,10 @@ def job():
     scrape('swift', filename)
     scrape('javascript', filename)
     scrape('go', filename)
+    scrape('java', filename)
 
     # git add commit push
     # git_add_commit_push(strdate, filename)
-
 
 if __name__ == '__main__':
     job()
