@@ -55,7 +55,8 @@ def job():
     # 获取环境变量的值，如果不存在则返回默认值
     env_variable_value = os.environ.get('username', 'default_value')
     env_variable_value_password = os.environ.get('password', 'default_value')
-    print(env_variable_value, env_variable_value_password)
+    env_variable_value_appId = os.environ.get('appId', 'default_value')
+    print('username:',env_variable_value,'password:', env_variable_value_password,'appId:', env_variable_value_appId)
     
     strdate = datetime.datetime.now().strftime('%Y-%m-%d')
     stryear = datetime.datetime.now().strftime('%Y')
