@@ -26,6 +26,9 @@ jobs:
         pip install -r requirements.txt
         
     - name: Run Scraper
+      env:
+        username: ${{ secrets.MAILUSERNAME }}
+        password: ${{ secrets.MAILPASSWORD }}
       run: |
         python scraper.py
 
@@ -39,3 +42,4 @@ jobs:
         git add -A
         git commit -m $(date '+%Y-%m-%d')
         git push
+      
