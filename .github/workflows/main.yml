@@ -29,6 +29,7 @@ jobs:
       env:
         username: ${{ secrets.MAILUSERNAME }}
         password: ${{ secrets.MAILPASSWORD }}
+        appId: 3920410
       run: |
         python scraper.py
 
